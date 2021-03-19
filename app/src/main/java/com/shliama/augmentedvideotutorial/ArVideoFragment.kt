@@ -69,6 +69,7 @@ class ArVideoFragment : ArFragment() {
 
         fun setupAugmentedImageDatabase(config: Config, session: Session): Boolean {
             try {
+                // TODO Check how to set this params just-in-time
                 config.augmentedImageDatabase = AugmentedImageDatabase(session).apply {
                     addImage(TEST_VIDEO_1, loadAugmentedImageBitmap(TEST_IMAGE_1))
                     addImage(TEST_VIDEO_2, loadAugmentedImageBitmap(TEST_IMAGE_2))
@@ -229,6 +230,10 @@ class ArVideoFragment : ArFragment() {
             videoRenderable.material.setBoolean(MATERIAL_VIDEO_CROP, VIDEO_CROP_ENABLED)
 
             mediaPlayer.reset()
+
+            // TODO Now this thing is not working properly (Couldn't playback video from internet)
+//            mediaPlayer.setDataSource(requireContext(), Uri.parse("https://www.youtube.com/watch?v=PC58uFFiLHM"))
+
             mediaPlayer.setDataSource(descriptor)
         }.also {
             mediaPlayer.isLooping = true

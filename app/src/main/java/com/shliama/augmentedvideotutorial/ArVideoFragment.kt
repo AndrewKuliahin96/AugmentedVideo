@@ -229,16 +229,14 @@ class ArVideoFragment : ArFragment() {
             videoRenderable.material.setFloat2(MATERIAL_VIDEO_SIZE, videoWidth, videoHeight)
             videoRenderable.material.setBoolean(MATERIAL_VIDEO_CROP, VIDEO_CROP_ENABLED)
 
-            mediaPlayer.reset()
-
             // TODO Now this thing is not working properly (Couldn't playback video from internet)
-//            mediaPlayer.setDataSource(requireContext(), Uri.parse("https://www.youtube.com/watch?v=PC58uFFiLHM"))
-
-            mediaPlayer.setDataSource(descriptor)
-        }.also {
-            mediaPlayer.isLooping = true
-            mediaPlayer.prepare()
-            mediaPlayer.start()
+            mediaPlayer.apply {
+                reset()
+                setDataSource(descriptor)
+                isLooping = true
+                prepare()
+                start()
+            }
         }
 
         videoAnchorNode.anchor?.detach()
@@ -253,12 +251,14 @@ class ArVideoFragment : ArFragment() {
     }
 
     private fun fadeInVideo() {
-        ValueAnimator.ofFloat(0f, 1f).apply {
+        ValueAnimator.ofFloat(0F, 1F).apply {
             duration = 400L
             interpolator = LinearInterpolator()
+
             addUpdateListener { v ->
                 videoRenderable.material.setFloat(MATERIAL_VIDEO_ALPHA, v.animatedValue as Float)
             }
+
             doOnStart { videoAnchorNode.renderable = videoRenderable }
             start()
         }
@@ -269,7 +269,6 @@ class ArVideoFragment : ArFragment() {
         dismissArVideo()
     }
 
-    // TODO check how to release MP properly
     // TODO fullscreen -> bottom show controls
     override fun onDestroy() {
         super.onDestroy()
@@ -287,11 +286,11 @@ class ArVideoFragment : ArFragment() {
         private const val TEST_VIDEO_2 = "test_video_2.mp4"
         private const val TEST_VIDEO_3 = "test_video_3.mp4"
 
-        private const val VIDEO_CROP_ENABLED = true
-
         private const val MATERIAL_IMAGE_SIZE = "imageSize"
         private const val MATERIAL_VIDEO_SIZE = "videoSize"
         private const val MATERIAL_VIDEO_CROP = "videoCropEnabled"
         private const val MATERIAL_VIDEO_ALPHA = "videoAlpha"
+
+        private const val VIDEO_CROP_ENABLED = true
     }
 }

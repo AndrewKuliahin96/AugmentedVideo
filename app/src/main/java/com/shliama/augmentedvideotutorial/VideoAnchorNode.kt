@@ -44,11 +44,11 @@ class VideoAnchorNode : AnchorNode() {
     }
 
     private fun rotateNode(videoRotation: Float) {
-        videoNode.localRotation = Quaternion.axisAngle(Vector3(0.0f, -1.0f, 0.0f), videoRotation)
+        videoNode.localRotation = Quaternion.axisAngle(Vector3(0.0F, -1.0F, 0.0F), videoRotation)
     }
 
     private fun scaleFitXY(imageWidth: Float, imageHeight: Float) =
-        Vector3(imageWidth, 1.0f, imageHeight)
+        Vector3(imageWidth, 1.0F, imageHeight)
 
     private fun scaleCenterCrop(
         videoWidth: Float,
@@ -64,15 +64,15 @@ class VideoAnchorNode : AnchorNode() {
 
         return if (isVideoVertical) {
             if (videoAspectRatio > imageAspectRatio) {
-                Vector3(imageWidth, 1.0f, imageWidth * videoAspectRatio)
+                Vector3(imageWidth, 1.0F, imageWidth * videoAspectRatio)
             } else {
-                Vector3(imageHeight / videoAspectRatio, 1.0f, imageHeight)
+                Vector3(imageHeight / videoAspectRatio, 1.0F, imageHeight)
             }
         } else {
             if (videoAspectRatio > imageAspectRatio) {
-                Vector3(imageHeight * videoAspectRatio, 1.0f, imageHeight)
+                Vector3(imageHeight * videoAspectRatio, 1.0F, imageHeight)
             } else {
-                Vector3(imageWidth, 1.0f, imageWidth / videoAspectRatio)
+                Vector3(imageWidth, 1.0F, imageWidth / videoAspectRatio)
             }
         }
     }
@@ -91,15 +91,15 @@ class VideoAnchorNode : AnchorNode() {
 
         return if (isVideoVertical) {
             if (videoAspectRatio < imageAspectRatio) {
-                Vector3(imageWidth, 1.0f, imageWidth * videoAspectRatio)
+                Vector3(imageWidth, 1.0F, imageWidth * videoAspectRatio)
             } else {
-                Vector3(imageHeight / videoAspectRatio, 1.0f, imageHeight)
+                Vector3(imageHeight / videoAspectRatio, 1.0F, imageHeight)
             }
         } else {
             if (videoAspectRatio < imageAspectRatio) {
-                Vector3(imageHeight * videoAspectRatio, 1.0f, imageHeight)
+                Vector3(imageHeight * videoAspectRatio, 1.0F, imageHeight)
             } else {
-                Vector3(imageWidth, 1.0f, imageWidth / videoAspectRatio)
+                Vector3(imageWidth, 1.0F, imageWidth / videoAspectRatio)
             }
         }
     }

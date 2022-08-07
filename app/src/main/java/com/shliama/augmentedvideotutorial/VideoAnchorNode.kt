@@ -5,16 +5,19 @@ import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.Renderable
+import com.google.ar.sceneform.rendering.RenderableInstance
 import com.shliama.augmentedvideotutorial.VideoScaleType.*
 
 class VideoAnchorNode : AnchorNode() {
 
     private val videoNode by lazy {
-        Node().also { it.setParent(this) }
+        Node().also { it.parent = this }
     }
 
-    override fun setRenderable(renderable: Renderable?) {
+    override fun setRenderable(renderable: Renderable?): RenderableInstance {
         videoNode.renderable = renderable
+
+        return super.setRenderable(renderable)
     }
 
     fun setVideoProperties(

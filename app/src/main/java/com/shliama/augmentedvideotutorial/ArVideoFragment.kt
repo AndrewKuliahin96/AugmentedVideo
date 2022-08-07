@@ -25,6 +25,8 @@ import com.google.ar.sceneform.FrameTime
 import com.google.ar.sceneform.rendering.ExternalTexture
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
+import com.gorisse.thomas.sceneform.light.LightEstimationConfig
+import com.gorisse.thomas.sceneform.lightEstimationConfig
 import java.io.IOException
 
 class ArVideoFragment : ArFragment() {
@@ -37,7 +39,7 @@ class ArVideoFragment : ArFragment() {
     }
 
     private val videoAnchorNode by lazy {
-        VideoAnchorNode().also { it.setParent(arSceneView.scene) }
+        VideoAnchorNode().also { it.parent = arSceneView.scene }
     }
 
     private lateinit var videoRenderable: ModelRenderable
@@ -51,10 +53,8 @@ class ArVideoFragment : ArFragment() {
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
-        planeDiscoveryController.hide()
-        planeDiscoveryController.setInstructionView(null)
         arSceneView.planeRenderer.isEnabled = false
-        arSceneView.isLightEstimationEnabled = false
+        arSceneView.lightEstimationConfig = LightEstimationConfig()
 
         initializeSession()
         createArScene()
@@ -62,7 +62,7 @@ class ArVideoFragment : ArFragment() {
         return view
     }
 
-    override fun getSessionConfiguration(session: Session): Config {
+    override fun onCreateSessionConfig(session: Session): Config {
 
         fun loadAugmentedImageBitmap(imageName: String): Bitmap =
             requireContext().assets.open(imageName).use { BitmapFactory.decodeStream(it) }
@@ -86,7 +86,7 @@ class ArVideoFragment : ArFragment() {
             return false
         }
 
-        return super.getSessionConfiguration(session).also {
+        return super.onCreateSessionConfig(session).also {
             it.lightEstimationMode = Config.LightEstimationMode.DISABLED
             it.focusMode = Config.FocusMode.AUTO
 
